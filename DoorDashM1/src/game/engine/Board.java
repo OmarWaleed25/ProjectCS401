@@ -65,7 +65,7 @@ public class Board {
 	}
 	
 	
-	void initializeBoard(ArrayList<Cell> specialCells){
+	public void initializeBoard(ArrayList<Cell> specialCells){
 		ArrayList<DoorCell> doors = new ArrayList<>();
 		ArrayList<ConveyorBelt> belts = new ArrayList<>();
 		ArrayList<ContaminationSock> socks = new ArrayList<>();
@@ -79,24 +79,41 @@ public class Board {
 		}
 		int d =0; // index for the doors list
 		int b =0; // index for the belts list
-		int s = 0; // index for the socks list
-		int bc =0; // index for the list of constant positions of 
-		int sc =0; // index for the list of constant positions of 
-		
+		int s = 0;// index for the socks list
+		//int c = 0; // index for the cards list
+		int m = 0; //index for the monsters list
+
+		int bc =0; // index for the list of constant positions of belts
+		int sc =0; // index for the list of constant positions of socks
+		int cc =0; // index for the list of constant positions of cards
+		int mc =0; // index for the list of constant positions of monsters
+
 		for(int i = 0;i < 100;i++){
 			if(i%2==1){ 
 				setCell(i,doors.get(d));
 				d++;
 			}
-			else{
-				if(i==Constants.CONVEYOR_CELL_INDICES[bc]){
-
-
+			else {
+				if (i == Constants.CONVEYOR_CELL_INDICES[bc]) {
+					setCell(i, belts.get(b));
+					b++;
+					bc++;
+				} else if (i == Constants.SOCK_CELL_INDICES[sc]) {
+					setCell(i, socks.get(s));
+					s++;
+					sc++;
 				}
+				else if(i==Constants.CARD_CELL_INDICES[cc]){
+					setCell(i,new CardCell("Card Cell"));
+					cc++;
+				}
+				else if(i==Constants.MONSTER_CELL_INDICES[mc]){
+					setCell(i,new MonsterCell("Monster Cell",stationedMonsters.get(m)));
+					m++;
+					mc++;
+				}
+				else setCell(i,new Cell("Normal Cell"));
 			}
-			
-		
-		
 		}
 	
 	
