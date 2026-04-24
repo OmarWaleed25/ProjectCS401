@@ -1,6 +1,8 @@
 package game.engine;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import game.engine.cards.Card;
 import game.engine.cells.*;
@@ -17,7 +19,9 @@ public class Board {
 		this.boardCells = new Cell[Constants.BOARD_ROWS][Constants.BOARD_COLS];
 		stationedMonsters = new ArrayList<Monster>();
 		originalCards = readCards;
+		this.setCardsByRarity();
 		cards = new ArrayList<Card>();
+		this.reloadCards();
 	}
 	
 	public Cell[][] getBoardCells() {
@@ -80,44 +84,69 @@ public class Board {
 		int d =0; // index for the doors list
 		int b =0; // index for the belts list
 		int s = 0;// index for the socks list
-		//int c = 0; // index for the cards list
 		int m = 0; //index for the monsters list
 
-		int bc =0; // index for the list of constant positions of belts
-		int sc =0; // index for the list of constant positions of socks
-		int cc =0; // index for the list of constant positions of cards
-		int mc =0; // index for the list of constant positions of monsters
+
+
+
+		for(int i =0;i<Constants.CONVEYOR_CELL_INDICES.length;i++){
+			if(belts==null || b>=belts.size()) break;
+			setCell(Constants.CONVEYOR_CELL_INDICES[i],belts.get(b));
+			b++;
+		}
+		for(int i =0;i<Constants.SOCK_CELL_INDICES.length;i++){
+			if(socks==null || s>=socks.size()) break;
+			setCell(Constants.SOCK_CELL_INDICES[i],socks.get(s));
+			s++;
+		}
+		for(int i=0;i<Constants.CARD_CELL_INDICES.length;i++){
+			setCell(Constants.CARD_CELL_INDICES[i],new CardCell("Card Cell"));
+		}
+
+		for(int i = 0;i < Constants.MONSTER_CELL_INDICES.length;i++){
+			if(stationedMonsters==null || m>=stationedMonsters.size()) break;
+			setCell(Constants.MONSTER_CELL_INDICES[i],new MonsterCell(stationedMonsters.get(m).getName(),stationedMonsters.get(m)));
+			m++;
+		}
 
 		for(int i = 0;i < 100;i++){
-			if(i%2==1){ 
+			if(doors==null || d>=doors.size()) break;
+			if(i%2==1){
 				setCell(i,doors.get(d));
 				d++;
+				continue;
 			}
-			else {
-				if (i == Constants.CONVEYOR_CELL_INDICES[bc]) {
-					setCell(i, belts.get(b));
-					b++;
-					bc++;
-				} else if (i == Constants.SOCK_CELL_INDICES[sc]) {
-					setCell(i, socks.get(s));
-					s++;
-					sc++;
-				}
-				else if(i==Constants.CARD_CELL_INDICES[cc]){
-					setCell(i,new CardCell("Card Cell"));
-					cc++;
-				}
-				else if(i==Constants.MONSTER_CELL_INDICES[mc]){
-					setCell(i,new MonsterCell("Monster Cell",stationedMonsters.get(m)));
-					m++;
-					mc++;
-				}
-				else setCell(i,new Cell("Normal Cell"));
-			}
+			int[] r_c =indexToRowCol(i);
+			if(boardCells[r_c[0]][r_c[1]]==null) setCell(i,new Cell("Normal Cell"));
 		}
-	
-	
 	}
+
+
+	private	void setCardsByRarity(){
+		ArrayList<Card> new_cards = new ArrayList<>();
+
+		for(int i=0;i<originalCards.size();i++){
+			Card c = originalCards.get(i);
+			int r = c.getRarity();
+			for(int j=0;j<r;j++) new_cards.add(c);
+		}
+
+		originalCards = new_cards;
+	}
+
+	public static void reloadCards(){
+		cards = new ArrayList<>(originalCards);
+		Collections.shuffle(cards);
+	}
+
+	public static Card drawCard(){
+		if(cards.size()==0) reloadCards();
+		Card a = cards.get(0);
+		cards.remove(0);
+		return a;
+	}
+
+
 	
 	
 	
