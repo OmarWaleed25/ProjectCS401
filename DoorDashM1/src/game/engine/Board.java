@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import game.engine.cards.Card;
+import game.engine.cards.ConfusionCard;
 import game.engine.cells.*;
+import game.engine.exceptions.InvalidMoveException;
 import game.engine.monsters.Monster;
 import game.engine.Constants;
 
@@ -145,6 +147,41 @@ public class Board {
 		cards.remove(0);
 		return a;
 	}
+
+    public void moveMonster(Monster currentMonster, int roll, Monster opponentMonster) throws InvalidMoveException {
+        int temp = currentMonster.getPosition();
+        boolean dont_decrement = false;
+        currentMonster.setPosition(currentMonster.getPosition()+roll);
+
+        if(getCell(currentMonster.getPosition()) instanceof CardCell && cards.get(0) instanceof ConfusionCard) dont_decrement = true;
+
+        if(currentMonster.getPosition() == opponentMonster.getPosition()){
+            currentMonster.setPosition(temp);
+            throw new InvalidMoveException();
+        }
+
+        this.getCell(currentMonster.getPosition()).onLand(currentMonster,opponentMonster); // --------> perform the action of the cell
+
+        if(currentMonster.getPosition() == opponentMonster.getPosition()){
+            currentMonster.setPosition(temp);
+            throw new InvalidMoveException();
+        }
+
+        if(!dont_decrement && currentMonster.getConfusionTurns()>0 && opponentMonster.getConfusionTurns()>0){
+            currentMonster.setConfusionTurns(currentMonster.getConfusionTurns()-1);
+            opponentMonster.setConfusionTurns(opponentMonster.getConfusionTurns()-1);
+        }
+
+        updateMonsterPositions(currentMonster, opponentMonster);
+    }
+
+
+    private void updateMonsterPositions(Monster player, Monster opponent){
+
+    }
+
+
+
 
 
 	
