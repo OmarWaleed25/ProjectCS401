@@ -151,20 +151,20 @@ public class Board {
     public void moveMonster(Monster currentMonster, int roll, Monster opponentMonster) throws InvalidMoveException {
         int temp = currentMonster.getPosition();
         boolean dont_decrement = false;
-        currentMonster.setPosition(currentMonster.getPosition()+roll);
+        currentMonster.move(roll);
 
         if(getCell(currentMonster.getPosition()) instanceof CardCell && cards.get(0) instanceof ConfusionCard) dont_decrement = true;
 
         if(currentMonster.getPosition() == opponentMonster.getPosition()){
             currentMonster.setPosition(temp);
-            throw new InvalidMoveException();
+            throw new InvalidMoveException("Invalid Move Attempted");
         }
 
         this.getCell(currentMonster.getPosition()).onLand(currentMonster,opponentMonster); // --------> perform the action of the cell
 
         if(currentMonster.getPosition() == opponentMonster.getPosition()){
             currentMonster.setPosition(temp);
-            throw new InvalidMoveException();
+            throw new InvalidMoveException("Invalid Move Attempted");
         }
 
         if(!dont_decrement && currentMonster.getConfusionTurns()>0 && opponentMonster.getConfusionTurns()>0){
@@ -177,7 +177,7 @@ public class Board {
 
 
     private void updateMonsterPositions(Monster player, Monster opponent){
-
+    	
     }
 
 

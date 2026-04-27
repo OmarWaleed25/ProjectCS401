@@ -83,12 +83,8 @@ public class Game {
 			getCurrent().setFrozen(false);
 		}else{
 			int move = rollDice();
-			if(move+getCurrent().getPosition() == getOpponent().getPosition()){
-				throw new InvalidMoveException("Invalid move attempted");
-			}else{
-				getCurrent().move(move);
-				switchTurn();
-			}
+			board.moveMonster(player, move, opponent);
+			switchTurn();
 		}
 	}
 	
@@ -120,11 +116,11 @@ public class Game {
 	}
 	
 	public void setStationedMonsters(ArrayList<Monster> stationedMonsters){
-		setStationedMonsters(stationedMonsters);
+		board.setStationedMonsters(stationedMonsters);
 	}
 	
 	public void initializeBoard(ArrayList<Cell> specialCells){
-		initializeBoard(specialCells);
+		board.initializeBoard(specialCells);
 	}
 	 
 }
