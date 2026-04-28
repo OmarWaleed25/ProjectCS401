@@ -1,5 +1,7 @@
 package game.engine.cells;
 
+
+
 public abstract class TransportCell extends Cell {
 	private int effect;
 
@@ -13,3 +15,4 @@ public abstract class TransportCell extends Cell {
 	}
 	
 }
+

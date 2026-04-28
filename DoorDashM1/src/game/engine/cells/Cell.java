@@ -22,9 +22,11 @@ public class Cell {
 	public void setMonster(Monster monster) {
 		this.monster = monster;
 	}
-
-    public void onLand(Monster landingMonster, Monster opponentMonster){
-        // wrie the method
-    }
-
+	public boolean isOccupied()
+	{
+		return this.monster!=null;
+	}
+	public void onLand(Monster landingMonster, Monster opponentMonster) {
+        setMonster(landingMonster);
+	}
 }
