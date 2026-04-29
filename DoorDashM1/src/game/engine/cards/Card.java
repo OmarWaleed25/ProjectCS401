@@ -30,6 +30,6 @@ public abstract class Card {
 		return lucky;
 	}
 
-	abstract void performAction(Monster player, Monster opponent);
+	abstract public void performAction(Monster player, Monster opponent);
 	
 }

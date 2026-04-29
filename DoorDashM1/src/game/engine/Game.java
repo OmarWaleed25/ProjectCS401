@@ -104,10 +104,10 @@ public class Game {
 	}
 	
 	public Monster getWinner(){
-		if(checkWinCondition(getCurrent())){
+		if(checkWinCondition(getCurrent()) && !checkWinCondition(getOpponent())){
 			return getCurrent();
 		}
-		else if(checkWinCondition(getOpponent())){
+		else if(checkWinCondition(getOpponent()) && !checkWinCondition(getCurrent()) ){
 			return getOpponent();
 		}
 		else{
