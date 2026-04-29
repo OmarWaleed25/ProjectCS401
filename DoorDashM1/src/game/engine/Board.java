@@ -177,6 +177,10 @@ public class Board {
 
 
     private void updateMonsterPositions(Monster player, Monster opponent){
+    	for(int i=0;i<100;i++)
+    		this.getCell(i).setMonster(null);
+    	this.getCell(player.getPosition()).setMonster(player);
+    	this.getCell(opponent.getPosition()).setMonster(opponent);
     	
     }
 
