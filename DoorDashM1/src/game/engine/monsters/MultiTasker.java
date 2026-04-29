@@ -28,15 +28,21 @@ public class MultiTasker extends Monster {
             super.move(distance);
             this.setNormalSpeedTurns(this.getNormalSpeedTurns()-1);
         }
-        else 
-            super.move(distance/2);
+        else{
+        	
+            super.move((int)(distance * 0.5));
+        }
     }
 	@Override
 	public void setEnergy(int energy){
 		int changeInenergy = energy - this.getEnergy();
         if (changeInenergy != 0)
         	changeInenergy += 200;
-        super.setEnergy(this.getEnergy() + changeInenergy);
+        int finalEnergy = this.getEnergy() + changeInenergy;
+        if (finalEnergy < 0) {
+            finalEnergy = 0;
+        }
+        super.setEnergy(finalEnergy);
 	}
 
 }
