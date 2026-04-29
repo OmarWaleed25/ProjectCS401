@@ -16,6 +16,7 @@ public class Dynamo extends Monster {
 	@Override
 	public void setEnergy(int energy) {
 		super.setEnergy(this.getEnergy()+2*(energy-this.getEnergy()));
+		// add
 	}
 	
 }
