@@ -81,6 +81,7 @@ public class Game {
 	public void playTurn() throws InvalidMoveException{
 		if(getCurrent().isFrozen()){
 			getCurrent().setFrozen(false);
+			switchTurn();
 		}else{
 			int move = rollDice();
 			board.moveMonster(player, move, opponent);
