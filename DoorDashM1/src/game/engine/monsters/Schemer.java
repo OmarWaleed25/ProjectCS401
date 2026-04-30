@@ -31,19 +31,20 @@ public class Schemer extends Monster {
 		ArrayList<Monster> stationed = Board.getStationedMonsters();
         if (stationed != null) {
             for (Monster stationedMonster : stationed) {
+            	if (stationedMonster != this)
                 stolen += stealEnergyFrom(stationedMonster);
             }
         }
-        super.setEnergy(this.getEnergy()+stolen);
+        this.setEnergy(this.getEnergy() + stolen);
 		
 	}
 	@Override
-	public void setEnergy(int energy){
-		int changeInenergy = energy - this.getEnergy();
-        if (changeInenergy != 0)
-        	changeInenergy += 10;
-        super.setEnergy(this.getEnergy() + changeInenergy);
-	}
-	
+    public void setEnergy(int energy) {
+        int finalValue = energy + 10; 
+        if (finalValue < 0) {
+            finalValue = 0;
+        }
+        super.setEnergy(finalValue);
+    }
 	
 }
