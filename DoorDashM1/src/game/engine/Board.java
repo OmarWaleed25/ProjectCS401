@@ -107,7 +107,9 @@ public class Board {
 
 		for(int i = 0;i < Constants.MONSTER_CELL_INDICES.length;i++){
 			if(stationedMonsters==null || m>=stationedMonsters.size()) break;
-			setCell(Constants.MONSTER_CELL_INDICES[i],new MonsterCell(stationedMonsters.get(m).getName(),stationedMonsters.get(m)));
+			Monster monster = stationedMonsters.get(m);
+			monster.setPosition(Constants.MONSTER_CELL_INDICES[i]);
+			setCell(Constants.MONSTER_CELL_INDICES[i],new MonsterCell(stationedMonsters.get(m).getName(),monster));
 			m++;
 		}
 
