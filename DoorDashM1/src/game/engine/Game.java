@@ -8,6 +8,7 @@ import game.engine.exceptions.*;
 import game.engine.dataloader.DataLoader;
 import game.engine.monsters.*;
 import game.engine.cells.*;
+
 public class Game {
 	private Board board;
 	private ArrayList<Monster> allMonsters; 
@@ -19,10 +20,15 @@ public class Game {
 		
 		this.board = new Board(DataLoader.readCards());
 		this.allMonsters = DataLoader.readMonsters();
+		
 		this.player = selectRandomMonsterByRole(playerRole);
 		this.opponent = selectRandomMonsterByRole(playerRole == Role.SCARER ? Role.LAUGHER : Role.SCARER);
 		this.current = player;
 		
+		allMonsters.remove(player);
+		allMonsters.remove(opponent);
+		board.setStationedMonsters(allMonsters);
+		board.initializeBoard(DataLoader.readCells());
 	}
 	
 	public Board getBoard() {

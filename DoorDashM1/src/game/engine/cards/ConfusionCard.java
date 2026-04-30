@@ -15,16 +15,14 @@ public class ConfusionCard extends Card {
 	}
 
 	public void performAction(Monster player, Monster opponent){
-		if(player.getRole()==Role.SCARER){
-			player.setRole(Role.LAUGHER);
-		}else{
-			player.setRole(Role.SCARER);
-		}
+		Role temp = player.getRole();
 		
-		if(opponent.getRole()==Role.SCARER){
-			opponent.setRole(Role.LAUGHER);
-		}else{
-			opponent.setRole(Role.SCARER);
-		}
+		player.setRole(opponent.getRole());
+		opponent.setRole(temp);
+		
+		player.setConfusionTurns(player.getConfusionTurns()+duration);
+		opponent.setConfusionTurns(opponent.getConfusionTurns()+duration);
 	}
+	
+	
 }

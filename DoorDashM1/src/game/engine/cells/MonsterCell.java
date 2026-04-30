@@ -15,7 +15,7 @@ public class MonsterCell extends Cell {
 	}
 	public void onLand(Monster landingMonster, Monster opponentMonster) {
         super.onLand(landingMonster, opponentMonster);
-	    Monster stationdMonster = this.getMonster();
+	    Monster stationdMonster = cellMonster;
 	    if (stationdMonster==null)
 	    	return;
 	    else if(landingMonster.getRole()==stationdMonster.getRole())
@@ -30,9 +30,9 @@ public class MonsterCell extends Cell {
 	    		if(!landingMonster.isShielded())
 	    	    {
 	    			landingMonster.setEnergy(stationdMonster.getEnergy());
-	    			
 	    		}
-	    	stationdMonster.setEnergy(temp);
+	    		else landingMonster.setShielded(false);
+	    		stationdMonster.setEnergy(temp);
 	        }
 	    }
 	
