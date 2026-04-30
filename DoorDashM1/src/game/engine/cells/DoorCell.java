@@ -39,6 +39,7 @@ public class DoorCell extends Cell implements CanisterModifier {
 		else
 			monster.alterEnergy(-canisterValue);
 	}
+	
 	public void onLand(Monster landingMonster, Monster opponentMonster) {
 	    super.onLand(landingMonster, opponentMonster);
 
@@ -47,25 +48,39 @@ public class DoorCell extends Cell implements CanisterModifier {
 	    boolean energyChanged = false;
 	    Role targetRole = landingMonster.getRole();
 	    int effectValue = (landingMonster.getRole() == this.getRole()) ? this.energy : -this.energy;
-
-	    if (effectValue > 0 || !landingMonster.isShielded()) {
-	        int oldEnergy = landingMonster.getEnergy();
-	        modifyCanisterEnergy(landingMonster, this.energy);
-	        if (landingMonster.getEnergy() != oldEnergy) energyChanged = true;
+	    
+	    if(effectValue>0){
+	    	int oldEnergy = landingMonster.getEnergy();
+        	modifyCanisterEnergy(landingMonster, this.energy);
+        	if (landingMonster.getEnergy() != oldEnergy) energyChanged = true;
 	    }
-	    for (Monster m : Board.getStationedMonsters()) {
-	        if (m != landingMonster && m != opponentMonster && m.getRole() == targetRole) {
-	            if (effectValue > 0 || !m.isShielded()) {
-	                int oldEnergy = m.getEnergy();
-	                modifyCanisterEnergy(m, this.energy);
-	                if (m.getEnergy() != oldEnergy) energyChanged = true;
-	            }
-	        }
+	    else{
+	    if (!landingMonster.isShielded()) {
+	    	int oldEnergy = landingMonster.getEnergy();
+        	modifyCanisterEnergy(landingMonster, this.energy);
+        	if (landingMonster.getEnergy() != oldEnergy) energyChanged = true;
+	    }
+	    else landingMonster.setShielded(false);
+	    }
+	    
+	    if(energyChanged){
+	    	for (Monster m : Board.getStationedMonsters()) {
+	    		if (m != landingMonster && m != opponentMonster && m.getRole() == targetRole) {
+	    			if (effectValue > 0 || !m.isShielded()) {
+	    				int oldEnergy = m.getEnergy();
+	                	modifyCanisterEnergy(m, this.energy);
+	                	if (m.getEnergy() != oldEnergy) energyChanged = true;
+	    			}
+	    		}
+	        
+	    	}
 	    }
 	    if (energyChanged) {
 	        this.setActivated(true);
 	    }
+	    
 	}
-	}
+	
+}
 
 

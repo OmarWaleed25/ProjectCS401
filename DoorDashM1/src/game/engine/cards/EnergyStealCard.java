@@ -20,11 +20,10 @@ public class EnergyStealCard extends Card implements CanisterModifier {
 				this.modifyCanisterEnergy(opponent,-energy);
 				this.modifyCanisterEnergy(player, energy);
 			}else{
-				this.modifyCanisterEnergy(player,player.getEnergy()+opponent.getEnergy());
+				this.modifyCanisterEnergy(player,opponent.getEnergy());
 				opponent.setEnergy(0);
 			}
 		}
-
 		else{
 			opponent.setShielded(false);
 		}

@@ -79,6 +79,7 @@ public class Game {
 	public void usePowerup() throws OutOfEnergyException{
 		if ( this.getCurrent().getEnergy() >= Constants.POWERUP_COST ){
 			this.getCurrent().executePowerupEffect( this.getCurrentOpponent() );
+			this.getCurrent().setEnergy(this.getCurrent().getEnergy()-Constants.POWERUP_COST);
 		}else{
 			throw new OutOfEnergyException ("Not Enough Energy for Power Up");
 		}
