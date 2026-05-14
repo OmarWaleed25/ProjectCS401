@@ -164,7 +164,7 @@ public class StartScreen {
     }
 
     // ─────────────────────────────────────────────
-    // BUTTON (NO CSS AT ALL)
+    // BUTTON
     // ─────────────────────────────────────────────
     private static Button buildButton(String text, Color accent) {
 
@@ -266,7 +266,7 @@ public class StartScreen {
     }
 
     // ─────────────────────────────────────────────
-    // AUDIO (unchanged placeholders)
+    // AUDIO
     // ─────────────────────────────────────────────
     private static void initAudio() {
         bgMusic  = loadAudio("/resources/sounds/theme.mp3",    true);
@@ -275,10 +275,10 @@ public class StartScreen {
  
         if (bgMusic != null) {
             bgMusic.setCycleCount(MediaPlayer.INDEFINITE);
-            bgMusic.setVolume(0.25);
+            bgMusic.setVolume(0.45);
         }
-        if (sfxHover != null) sfxHover.setVolume(0.6);
-        if (sfxClick != null) sfxClick.setVolume(0.8);
+        if (sfxHover != null) sfxHover.setVolume(0.3);
+        if (sfxClick != null) sfxClick.setVolume(0.5);
     }
  
     private static MediaPlayer loadAudio(String resourcePath, boolean isMusic) {
@@ -545,7 +545,7 @@ public class StartScreen {
         Button closeBtn = buildMainButton("Close", GOLD, Color.web("#4a3000"));
         closeBtn.setOnAction(e -> dialog.close());
 
-        // prevent hover sound spam (your original logic preserved)
+        // prevent hover sound spam
         closeBtn.setOnMouseEntered(e -> {});
 
         VBox footer = new VBox(closeBtn);
@@ -571,7 +571,7 @@ public class StartScreen {
         Scene scene = new Scene(wrapper, 600, 520);
         dialog.setScene(scene);
 
-        // fade animation (unchanged)
+        // fade animation
         FadeTransition ft = new FadeTransition(Duration.millis(250), wrapper);
         ft.setFromValue(0);
         ft.setToValue(1);
@@ -641,7 +641,7 @@ public class StartScreen {
         btn.setBorder(border);
         btn.setEffect(shadow);
 
-        // ── Hover behavior (no CSS)
+        // ── Hover behavior
         btn.setOnMouseEntered(e -> {
             btn.setBackground(hoverBg);
             btn.setEffect(new DropShadow(18, accentColor));
