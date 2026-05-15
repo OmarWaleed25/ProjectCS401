@@ -275,7 +275,7 @@ public class StartScreen {
  
         if (bgMusic != null) {
             bgMusic.setCycleCount(MediaPlayer.INDEFINITE);
-            bgMusic.setVolume(0.45);
+            bgMusic.setVolume(0.05);
         }
         if (sfxHover != null) sfxHover.setVolume(0.3);
         if (sfxClick != null) sfxClick.setVolume(0.5);
